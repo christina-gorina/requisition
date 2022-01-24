@@ -1,0 +1,41 @@
+spring:
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
+  cloud:
+    stream:
+      instance-count: 1
+      instance-index: 0
+      default-binder: kafka
+      kafka:
+        binder:
+          brokers: asdasd, asdasd, asdasd
+          defaultBrokerPort: 9093
+          autoAddPartitions: true
+          min-partition-count: 5
+          configuration:
+            sequruty:
+              protocol: SSL
+            ssl:
+              truststore:
+                location: /config-volume/client.truststore.jks
+                password:q123324234
+                type:JKS
+              endpoint:
+                identification:
+                  algorithm: null
+      bindings:
+        inputRequisition:
+          group: requisition.rewqork
+          consumer:
+            partitioned: true
+          destination: requisition.rewqork
+        outputRequisition:
+          producer:
+            partitionKeyExpression: T(java.time.LocalDateTime).now()
+            partitionCount: 5
+          destination: outtopic.outwork
+server:
+  port: 8081
